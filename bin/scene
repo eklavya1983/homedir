@@ -1,0 +1,43 @@
+#!/bin/bash
+
+function usage() {
+   echo "Usage : $(basename $0) <testname>"
+   exit 0
+}
+
+if [[ $# -ne 1 ]]; then
+   usage
+fi
+
+TESTNAME="$1"
+TESTDIR=${FDSSRC}/test/cfg
+
+if [[ ! -f ${TESTDIR}/${TESTNAME} ]]; then
+   echo "testdir: ${TESTDIR}"
+   echo "unable to locate test : ${TESTDIR}/${TESTNAME}"
+   exit 0
+fi
+
+TEMPINIFILE=/tmp/${TESTNAME}.ini
+
+echo "
+[harness]
+# Parameters for Jenkins build on commit testing
+test_source_dir: ${FDSSRC}/test/testcases
+log_dir: ${FDSSRC}/cit
+log_level: 20
+stop_on_fail: True
+run_as_root: False
+threads: 1
+iterations: 1
+
+# Parameters for the test suite. fds_config_file is required.
+fds_config_file: ${TESTDIR}/${TESTNAME}
+
+# fds_source_dir is required if you want to run from a development
+# environment and you are not starting the test from your ~/source
+# directory or some sub-directory.
+fds_source_dir: ${FDSSRC}
+" > ${TEMPINIFILE}
+
+(cd ${FDSSRC}/test/testsuites; sudo ./ScenarioDriverSuite.py -q ${TEMPINIFILE})
