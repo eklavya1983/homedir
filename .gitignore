@@ -9,3 +9,7 @@
 !.gitignore
 !bin/
 !bin/*
+!.vim/plugin
+!.vim/plugin/autotags.vim
+!.vim/plugin/cscope_maps.vim
+!.vim/plugin/DoxygenToolkit.vim
