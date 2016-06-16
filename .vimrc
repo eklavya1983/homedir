@@ -39,7 +39,6 @@ filetype on
 filetype plugin indent on
 set showmatch
 set backspace=indent,eol,start
-set paste
 set autoindent
 set ignorecase
 set smartcase
@@ -64,7 +63,8 @@ let g:DoxygenToolkit_licenseTag="Copyright 2013 Formation Data Systems, Inc."
 
 " youcompleteme specific
 let g:ycm_autoclose_preview_window_after_completion=1
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd Filetype c,cpp nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd Filetype python nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " so you ultisnip uses tab key (http://www.alexeyshmalko.com/2014/youcompleteme-ultimate-autocomplete-plugin-for-vim/)
 "let g:ycm_key_list_select_completion=[]
 "let g:ycm_key_list_previous_completion=[]
